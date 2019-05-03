@@ -11,7 +11,7 @@ import UIKit
 
 public extension UIDevice {
     static let identifier: String = {
-        if let vendorId = UIDevice.current.identifierForVendor {
+        if let vendorId = UIDevice.current.identifierForVendor { //device numero de serie 
             return "\(vendorId.hashValue):\(vendorId.uuidString)"
         } else {
             return "\(Date().currentTimestamp()):\(UUID().uuidString)"
@@ -26,7 +26,7 @@ public extension UIDevice {
             guard let value = element.value as? Int8, value != 0 else { return identifier }
             return identifier + String(UnicodeScalar(UInt8(value)))
         }
-        
+        //device name
         func mapToDevice(identifier: String) -> String { // swiftlint:disable:this cyclomatic_complexity
             #if os(iOS)
             switch identifier {

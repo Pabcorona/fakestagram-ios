@@ -9,9 +9,12 @@
 import Foundation
 
 struct Author: Codable {
+    let id: String
     let name: String
     
-    func avatarURL() -> URL {
+    
+   // func avatarURL() -> URL {
+    func avatarUrl() -> URL {
         return Identicon(key: self.name).url()!
     }
 }

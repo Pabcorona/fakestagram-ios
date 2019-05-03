@@ -47,7 +47,8 @@ class RestClient<T> where T: Codable {
         request("DELETE", path: "\(path)/\(id)", payload: nil, success: success, errorHandler: nil)
     }
     
-    private func request(_ method: String, path: String, payload: T?, success: @escaping codableResponse, errorHandler: errorHandler?) {
+//    private func request(_ method: String, path: String, payload: T?, success: @escaping codableResponse, errorHandler: errorHandler?)
+    func request(_ method: String, path: String, payload: T?, success: codableResponse?, errorHandler: errorHandler?){
         let data = encode(payload: payload)
         client.request(method, path: path, body: data, completionHandler: { (response, data) in
             guard response.successful() else { return }
@@ -56,8 +57,9 @@ class RestClient<T> where T: Codable {
             do {
                 guard let data = data else { print("Empty response"); return }
                 let json = try decoder.decode(T.self, from: data)
-                print("===================================================================")
-                success(json)
+                //print("===================================================================")
+                // success(json)
+                success?(json)
             } catch let err {
                 print("Unable to parse successfull response: \(err.localizedDescription)")
                 errorHandler?(err)

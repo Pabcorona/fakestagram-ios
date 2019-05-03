@@ -32,9 +32,12 @@ struct Client {
         request.setValue(contentType, forHTTPHeaderField: "Content-Type")
         request.httpMethod = method
         request.httpBody = body
-        if let token = Secrets.uuid.value {
-            request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
+        //if let token = Secrets.uuid.value {
+        if let token = Secrets.token.value {
+                request.addValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            }
+            
+        // }
         
         let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
             if error != nil {
@@ -42,7 +45,11 @@ struct Client {
                 return
             }
             let response = HTTPResponse(reponse: response as! HTTPURLResponse)
-            completionHandler?(response, data)
+               //completionHandler?(response, data)
+            DispatchQueue.main.async {
+                completionHandler?(response, data)
+            }
+            
         }
         task.resume()
     }
